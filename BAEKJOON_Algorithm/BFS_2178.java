@@ -53,7 +53,7 @@ public class BFS_2178 {
         System.out.println(count[N-1][M-1]);
     }
 
-    public static class Point {
+    private static class Point {
         int x;
         int y;
 
