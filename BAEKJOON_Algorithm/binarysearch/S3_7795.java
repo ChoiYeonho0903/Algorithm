@@ -31,8 +31,7 @@ public class S3_7795 {
             for (int j = 1; j <= M; j++) {
                 B[j] = Integer.parseInt(st.nextToken());
             }
-            Arrays.sort(A);
-            Arrays.sort(B);
+            Arrays.sort(B, 1, M+1);
             for (int j = 1; j <=N; j++) {
                 ans +=binarySearch(B, 1,M, A[j]);
             }
