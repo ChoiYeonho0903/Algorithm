@@ -27,13 +27,13 @@ public class G5_2470 {
             int tmp;
             int result = binarySearch(solution, i+1, N, solution[i]*(-1));
             if (i + 1 <= result-1 && result-1 <= N && Math.abs(solution[result-1] + solution[i]) < min) {
-                min = Math.abs(Math.abs(solution[result-1] + solution[i]));
+                min = Math.abs(solution[result-1] + solution[i]);
                 ans[0] = solution[i];
                 ans[1] = solution[result-1];
             }
 
             if (i + 1 <= result && result <= N && Math.abs(solution[result] + solution[i]) < min) {
-                min = Math.abs(Math.abs(solution[result] + solution[i]));
+                min = Math.abs(solution[result] + solution[i]);
                 ans[0] = solution[i];
                 ans[1] = solution[result];
             }
