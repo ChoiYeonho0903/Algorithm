@@ -31,7 +31,7 @@ public class S3_2805 {
 
     static void binarySearch() {
         int L = 0;
-        int R = 2000000000;
+        int R = 1000000000;
         ans = 0;
 
         while (L<=R) {
@@ -46,7 +46,7 @@ public class S3_2805 {
     }
 
     static boolean satisfy(int h) {
-        long sum = 0;
+        long sum = 0L;
         for (int i = 1; i <=N; i++) {
             if(tree[i] - h > 0) {
                 sum += (tree[i] - h);
