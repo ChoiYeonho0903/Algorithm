@@ -26,26 +26,17 @@ public class G5_2470 {
     static void twoPointer() {
         int R = N;
         int L = 1;
-        int sum = Integer.MAX_VALUE;
+        int minSum = Integer.MAX_VALUE;
         int[] ans = new int[2];
         while (L < R) {
-            if (A[L] + A[R] == 0) {
+            if (minSum > Math.abs(A[L] + A[R])) {
+                minSum = Math.abs(A[L] + A[R]);
                 ans[0] = A[L];
                 ans[1] = A[R];
-                break;
-            } else if (A[L] + A[R] > 0) {
-                if (sum > Math.abs(A[L] + A[R])) {
-                    sum = Math.abs(A[L] + A[R]);
-                    ans[0] = A[L];
-                    ans[1] = A[R];
-                }
+            }
+            if (A[L] + A[R] > 0) {
                 R--;
             } else {
-                if (sum > Math.abs(A[L] + A[R])) {
-                    sum = Math.abs(A[L] + A[R]);
-                    ans[0] = A[L];
-                    ans[1] = A[R];
-                }
                 L++;
             }
         }
