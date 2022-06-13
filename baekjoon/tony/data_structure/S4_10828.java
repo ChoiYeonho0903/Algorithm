@@ -3,7 +3,7 @@ package baekjoon.tony.data_structure;
 import java.io.*;
 import java.util.*;
 
-public class DS_10828 {
+public class S4_10828 {
     static StringBuilder sb = new StringBuilder();
     static int N;
     static Stack<Integer> stack = new Stack<>();
