@@ -16,7 +16,6 @@ public class S2_11725 {
             int tmp = list[x].get(i);
             if(!visited[tmp]) {
                 ans[tmp] = x;
-                visited[tmp] = true;
                 dfs(tmp);
             }
         }
