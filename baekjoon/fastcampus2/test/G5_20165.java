@@ -11,7 +11,7 @@ public class G5_20165 {
     static int R;
 
     static int[][] length;
-    static boolean[][] domino;
+    static int[][] backUp;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
@@ -22,13 +22,13 @@ public class G5_20165 {
         M = Integer.parseInt(st.nextToken());
         R = Integer.parseInt(st.nextToken());
         length = new int[N+1][M+1];
-        domino = new boolean[N+1][M+1];
+        backUp = new int[N+1][M+1];
         for(int i = 1; i <= N; i++) {
             str = br.readLine();
             st = new StringTokenizer(str, " ");
             for(int j = 1; j <= M; j++) {
                 length[i][j] = Integer.parseInt(st.nextToken());
-                domino[i][j] = true;
+                backUp[i][j] = length[i][j];
             }
         }
 
@@ -48,7 +48,7 @@ public class G5_20165 {
 
         for(int i = 1; i <= N; i++) {
             for(int j = 1; j <= M; j++) {
-                if(!domino[i][j]) {
+                if(length[i][j] == 0) {
                     sb.append("F").append(" ");
                 } else {
                     sb.append("S").append(" ");
@@ -61,75 +61,41 @@ public class G5_20165 {
         System.out.print(sb);
     }
 
-    static void attack(int aY, int aX, String aD) {
-        if(!domino[aY][aX]) {
+    static void attack(int y, int x, String aD) {
+        if(length[y][x] == 0) {
             return;
         }
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(aY);
-        queue.add(aX);
-        score++;
+        int dx = 0, dy = 0;
         switch (aD) {
             case "E":
-                while(!queue.isEmpty()) {
-                    int y = queue.poll();
-                    int x = queue.poll();
-                    domino[y][x] = false;
-                    for(int i = 1; i <= length[y][x]-1; i++) {
-                        if(x+i <= M && domino[y][x+i]) {
-                            queue.add(y);
-                            queue.add(x+i);
-                            score++;
-                        }
-                    }
-                }
+                dx = 1;
                 break;
             case "W":
-                while(!queue.isEmpty()) {
-                    int y = queue.poll();
-                    int x = queue.poll();
-                    domino[y][x] = false;
-                    for(int i = 1; i <= length[y][x]-1; i++) {
-                        if(x-i >= 1 && domino[y][x-i]) {
-                            queue.add(y);
-                            queue.add(x-i);
-                            score++;
-                        }
-                    }
-                }
+                dx = -1;
                 break;
             case "S":
-                while(!queue.isEmpty()) {
-                    int y = queue.poll();
-                    int x = queue.poll();
-                    domino[y][x] = false;
-                    for(int i = 1; i <= length[y][x]-1; i++) {
-                        if(y+i <= N && domino[y+i][x]) {
-                            queue.add(y+i);
-                            queue.add(x);
-                            score++;
-                        }
-                    }
-                }
+                dy = 1;
                 break;
             case "N":
-                while(!queue.isEmpty()) {
-                    int y = queue.poll();
-                    int x = queue.poll();
-                    domino[y][x] = false;
-                    for(int i = 1; i <= length[y][x]-1; i++) {
-                        if(y-i >= 1 && domino[y-i][x]) {
-                            queue.add(y-i);
-                            queue.add(x);
-                            score++;
-                        }
-                    }
-                }
+                dy = -1;
                 break;
+        }
+
+        int cnt = length[y][x];
+        while(y >= 1 && x >= 1 && y <= N && x <= M && cnt >= 1) {
+            if (length[y][x] > 0) {
+                score++;
+            }
+
+            cnt = Math.max(cnt-1, length[y][x]-1);
+            length[y][x] = 0;
+
+            y += dy;
+            x += dx;
         }
     }
 
     static void defence(int aY, int aX) {
-        domino[aY][aX] = true;
+        length[aY][aX] = backUp[aY][aX];
     }
 }
