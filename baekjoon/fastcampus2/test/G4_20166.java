@@ -11,7 +11,7 @@ public class G4_20166 {
     static int[] dy = {-1, -1, -1, 0, 1, 1, 1, 0};
     static int[] dx = {-1, 0, 1, 1, 1, 0, -1, -1};
     static String[][] arr;
-    static int cnt;
+    static HashMap<String, Integer> map = new HashMap<>();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
@@ -30,25 +30,34 @@ public class G4_20166 {
             }
         }
 
-        for(int k = 0; k < K; k++) {
-            str = br.readLine();
+        for(int len = 1; len <= 5; len++) {
             for(int i = 0; i < N; i++) {
                 for(int j = 0; j < M; j++) {
-                    if(arr[i][j].equals(str.substring(0, 1))) {
-                        dfs(i, j, arr[i][j], 1, str);
-                    }
+                    dfs(i, j, 1, arr[i][j], len);
                 }
             }
-            sb.append(cnt).append("\n");
-            cnt = 0;
+        }
+        for(int i = 0; i < K; i++) {
+            str = br.readLine();
+            if(map.get(str) == null) {
+                sb.append(0).append("\n");
+            } else {
+                sb.append(map.get(str)).append("\n");
+            }
         }
 
+//        System.out.println(map.get("a"));
         System.out.print(sb);
     }
 
-    static void dfs(int y, int x, int depth, String str) {
-        if(depth == str.length()) {
-            cnt++;
+    static void dfs(int y, int x, int depth, String str, int length) {
+        if(depth == length) {
+            if(map.containsKey(str)) {
+                int cnt = map.get(str);
+                map.put(str, cnt+1);
+            } else {
+                map.put(str, 1);
+            }
             return;
         }
         for(int i = 0; i < 8; i++) {
@@ -64,9 +73,7 @@ public class G4_20166 {
             } else if (tx >= M) {
                 tx -= M;
             }
-            if(arr[ty][tx].equals(str.substring(depth, depth+1))) {
-                dfs(ty, tx, depth+1, str);
-            }
+            dfs(ty, tx, depth+1, str+arr[ty][tx], length);
         }
     }
 }
